@@ -12,7 +12,8 @@ class CssAssetTagger
 
           # if the uri appears to begin with a protocol then the asset isn't on the local filesystem
           # or if query string appears to exist already, the uri is returned as is
-          if uri =~ /[a-z]+:\/\//i || uri =~ /(\?|&)\d{10}/
+          # or if uri contains embedded file, like base 64 ecoded image
+          if uri =~ /[a-z]+:\/\//i || uri =~ /(\?|&)\d{10}/ || uri =~ /^data:/i
             "url(#{uri})"
           else
             # if the first char is a / then get the path of the file with respect to the absolute path of the asset files
